@@ -1,7 +1,24 @@
+'use client'
 import { Header } from "@/components/header";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { Footer } from "@/components/footer";
+import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+// Default theme
+import '@splidejs/react-splide/css';
+
+
+// or other themes
+import '@splidejs/react-splide/css/skyblue';
+import '@splidejs/react-splide/css/sea-green';
+
+
+// or only core styles
+import '@splidejs/react-splide/css/core';
+import "react-multi-carousel/lib/styles.css";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +37,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Header />
         {children}
+        <ToastContainer/>
         <Footer />
       </body>
     </html>

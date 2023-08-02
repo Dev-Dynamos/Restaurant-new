@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-
+  images: {
+    domains: ["uploads-file-portal-das-escolas.s3.amazonaws.com"],
+  },
 }
 
 

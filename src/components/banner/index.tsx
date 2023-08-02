@@ -1,5 +1,6 @@
 import Image from "next/image";
 import ImageBanner from "../../../public/food.jpg";
+import Link from "next/link";
 
 export const Banner = () => {
   return (
@@ -16,7 +17,7 @@ export const Banner = () => {
             </p>
             <div className="pt-6 gap-3 flex">
               <button className="w-[8rem] h-[3rem] text-white hover:bg-[#F3BC5A] border-[1px] bg-[#F3BC5A] rounded-md">
-                Explorar mais
+                <Link href={"/Produto"}>Explorar mais</Link>
               </button>
               <button className="w-[8rem] h-[3rem] hover:brightness-90 bg-slate-700 text-white rounded-3xl border-[1px] border-[#FDF3E1] ">
                 Pesquisar
