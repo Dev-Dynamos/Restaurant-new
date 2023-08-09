@@ -44,9 +44,9 @@ export const ItemCard: React.FC<CardProps> = ({
       </div>
       <div className="flex flex-col items-center">
         <h3>{nome}</h3>
-        <div className="flex text-2xl">
+        <div className="flex w-full truncate">
+          <p className="text-xs">{descricao}</p>
         </div>
-        <p className="text-xs truncate">{descricao}</p>
       </div>
       <div className="flex justify-between items-center truncate ">
         <span className="text-[#A89793]">{`${formattedPreco}`} kz</span>

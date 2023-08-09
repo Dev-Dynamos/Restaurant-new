@@ -2,8 +2,9 @@ import { useFormik } from 'formik';
 import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import { mutate } from 'swr';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { api } from '@/services';
+import { GetUser } from '@/app/Entrar/actions';
 
 type formProps = {
   onclose: () => void;
@@ -11,44 +12,44 @@ type formProps = {
 };
 
 export const FormCompra: React.FC<formProps> = ({item}) => {
+  const [data, setData] = useState(null)
+
+  async function handleData(){
+    const data = await GetUser()
+    if(data) setData(data)
+  }
+  useEffect(()=>{
+    handleData()
+  }, [])
   const formik = useFormik({
     initialValues: {
-      nome: '',
+      // nome: '',
       descricao: '',
       localizacao: '',
       produtoId: item?.id,
-      email: '',
-      telefone: '',
+      // email: '',
+      // telefone: '',
     },
     validationSchema: yup.object({
-      nome: yup.string().required('Este campo é obrigatório'),
+      // nome: yup.string().required('Este campo é obrigatório'),
       descricao: yup.string().required('Este campo é obrigatório'),
       localizacao: yup.string().required('Este campo é obrigatório'),
-      email: yup.string().required('Este campo é obrigatório').email('Email inválido'),
-      telefone: yup.string().required('Este campo é obrigatório'),
+      // email: yup.string().required('Este campo é obrigatório').email('Email inválido'),
+      // telefone: yup.string().required('Este campo é obrigatório'),
     }),
     onSubmit: async (fields) => {
-      console.log('====================================');
-      console.log(fields);
-      console.log('====================================');
       try {
-        const resp = await api.post(`/client`, {
-          nome: fields.nome,
-          telefone: fields.telefone,
-          email: fields.email
-        })
-        if(resp.data){
+
           const response = await api.post('/order', {
             localizacao: fields.localizacao,
             productoId: fields.produtoId,
-            clienteId: resp?.data?.id,
+            clienteId: data?.admin?.id,
             descricao: fields.descricao,
           });
           if (response.data) {
             mutate('/order');
             formik.resetForm();
             toast.success('Pedido feito com sucesso! aguarde a entrega');
-          }
         }
       } catch (err: any) {
         toast.error(err?.error?.message);
@@ -63,7 +64,7 @@ export const FormCompra: React.FC<formProps> = ({item}) => {
           <form onSubmit={formik.handleSubmit}>
             <div className="p-6.5">
               <div className="mb-2 flex flex-col gap-2">
-                <div className="w-full ">
+                {/* <div className="w-full ">
                   <label className="mb-2.5 block text-black dark:text-white">
                     Nome
                   </label>
@@ -76,8 +77,8 @@ export const FormCompra: React.FC<formProps> = ({item}) => {
                     onChange={formik.handleChange}
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                   />
-                </div>
-                <div className="w-full">
+                </div> */}
+                {/* <div className="w-full">
                   <label className="mb-2.5 block text-black dark:text-white">
                     Email
                   </label>
@@ -90,8 +91,8 @@ export const FormCompra: React.FC<formProps> = ({item}) => {
                     onChange={formik.handleChange}
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                   />
-                </div>
-                <div className="w-full">
+                </div> */}
+                {/* <div className="w-full">
                   <label className="mb-2.5 block text-black dark:text-white">
                     Telefone
                   </label>
@@ -104,7 +105,7 @@ export const FormCompra: React.FC<formProps> = ({item}) => {
                     onChange={formik.handleChange}
                     className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-medium outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                   />
-                </div>
+                </div> */}
               </div>
 
               <div className="mb-4.5">

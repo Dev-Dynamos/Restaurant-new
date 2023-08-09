@@ -1,6 +1,19 @@
+'use client'
+import { GetUser } from "@/app/Entrar/actions";
 import { useRouter } from "next/navigation";
+import { AuthDropdown } from "../auth/dropdown";
+import { useEffect, useState } from "react";
 
 export const Header = () => {
+  const [data, setData] = useState(null)
+
+  async function handleData(){
+    const data = await GetUser()
+    if(data) setData(data)
+  }
+  useEffect(()=>{
+    handleData()
+  }, [])
   const router = useRouter()
   return (
     <>
@@ -15,9 +28,9 @@ export const Header = () => {
               <li className="cursor-pointer" onClick={() => router.push(`/Produto`)}>Produtos</li>
               <li className="cursor-pointer" onClick={() => router.push(`/Menu`)}>Menus</li>
               <li className="cursor-pointer" onClick={() => router.push(`/Categoria`)}>Categorias</li>
-              <li className="cursor-pointer">Sobre nós</li>
+              <li className="cursor-pointer" onClick={() => router.push(`/meus-produtos`)}>Meus Pedidos</li>
             </ul>
-            {/* <button className="w-28 h-10 bg-[#E6B45E] rounded-md">Login</button> */}
+            {data ? (<AuthDropdown user={data}/>) : (<button onClick={() => router.push("/Entrar")} className="w-28 h-10 bg-[#E6B45E] rounded-md">Entrar</button>)}
           </div>
         </div>
       </header>
